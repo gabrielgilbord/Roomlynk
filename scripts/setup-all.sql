@@ -1,0 +1,19 @@
+-- =============================================================================
+-- RoomLynk — GUÍA DE MIGRACIONES
+-- =============================================================================
+--
+-- NO uses 001_initial_schema.sql (schema public, colisiona con otras apps).
+--
+-- ORDEN CORRECTO:
+--   1. supabase/migrations/002_roomlynk_schema.sql   ← esquema roomlynk (tablas)
+--   2. supabase/migrations/003_invitation_rpc.sql      ← RPC + RLS firma (YO la generé)
+--      o scripts/setup-003-only.sql (mismo contenido, idempotente)
+--
+-- Si YA ejecutaste el 002 y setup-all.sql falla por duplicados:
+--   → Ejecuta SOLO scripts/setup-003-only.sql en el SQL Editor
+--
+-- Después: expón schema "roomlynk" en Settings → API → Data API
+--          npm run seed
+-- =============================================================================
+
+-- Este archivo ya no concatena 002+003. Usa los archivos anteriores.
