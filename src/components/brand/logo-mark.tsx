@@ -1,0 +1,32 @@
+import { cn } from "@/lib/utils";
+
+interface LogoMarkProps {
+  className?: string;
+  size?: number;
+}
+
+export function LogoMark({ className, size = 32 }: LogoMarkProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 32 32"
+      fill="none"
+      width={size}
+      height={size}
+      className={cn("shrink-0", className)}
+      aria-hidden
+    >
+      <rect width="32" height="32" rx="8" fill="#2a4f42" />
+      <path
+        d="M7 22V12.5A2.5 2.5 0 0 1 9.5 10H13a2.5 2.5 0 0 1 2.5 2.5V22H7z"
+        fill="#f3ede4"
+      />
+      <path
+        d="M17 22V12.5A2.5 2.5 0 0 1 19.5 10H23a2.5 2.5 0 0 1 2.5 2.5V22H17z"
+        fill="#b84a32"
+      />
+      <rect x="12.25" y="15" width="7.5" height="3.5" rx="1.75" fill="#e8f0ec" />
+      <circle cx="16" cy="16.75" r="1" fill="#2a4f42" />
+    </svg>
+  );
+}

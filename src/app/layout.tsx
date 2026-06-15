@@ -18,6 +18,10 @@ export const metadata: Metadata = {
   title: "RoomLynk — Coliving sin fricción",
   description:
     "Gestiona habitaciones, contratos firmados y gastos compartidos. Hecho para caseros e inquilinos reales.",
+  icons: {
+    icon: [{ url: "/logo-mark.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/apple-touch-icon.svg", type: "image/svg+xml" }],
+  },
 };
 
 export default function RootLayout({

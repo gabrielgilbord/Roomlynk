@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 40" fill="none" role="img" aria-label="RoomLynk">
+  <rect x="0" y="4" width="32" height="32" rx="8" fill="#2a4f42"/>
+  <path d="M7 30V20.5A2.5 2.5 0 0 1 9.5 18H13a2.5 2.5 0 0 1 2.5 2.5V30H7z" fill="#f3ede4"/>
+  <path d="M17 30V20.5A2.5 2.5 0 0 1 19.5 18H23a2.5 2.5 0 0 1 2.5 2.5V30H17z" fill="#b84a32"/>
+  <rect x="12.25" y="23" width="7.5" height="3.5" rx="1.75" fill="#e8f0ec"/>
+  <circle cx="16" cy="24.75" r="1" fill="#2a4f42"/>
+  <text x="44" y="28" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1a1614" letter-spacing="-0.02em">Room</text>
+  <text x="118" y="28" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#b84a32" letter-spacing="-0.02em">Lynk</text>
+</svg>
