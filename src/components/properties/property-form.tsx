@@ -24,7 +24,7 @@ export function PropertyForm() {
 
       <div className="border-t border-border pt-5">
         <p className="mb-4 text-sm font-medium text-ink">Primera habitación</p>
-        <div className="grid gap-5 sm:grid-cols-3">
+        <div className="grid gap-5 grid-cols-1 md:grid-cols-3">
           <Input label="Nombre" name="roomName" defaultValue="Habitación 1" required />
           <Input
             label="Renta mensual (€)"

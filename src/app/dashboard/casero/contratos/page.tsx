@@ -2,6 +2,8 @@ import { DashboardShell } from "@/components/layout/dashboard-shell";
 import { InvitationForm } from "@/components/invitations/invitation-form";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { ListRow } from "@/components/ui/list-row";
+import { PageHeader } from "@/components/ui/page-header";
 import { requireRole } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { formatDate } from "@/lib/utils";
@@ -47,30 +49,32 @@ export default async function ContratosCaseroPage() {
 
   return (
     <DashboardShell profile={profile} activePath="/dashboard/casero/contratos">
-      <div className="space-y-10">
-        <header>
-          <Link href="/dashboard/casero" className="text-xs text-ink-muted hover:text-ink">
-            ← Resumen
-          </Link>
-          <h1 className="rl-display mt-2 text-3xl font-medium text-ink">Contratos e invitaciones</h1>
-        </header>
+      <div className="space-y-8">
+        <PageHeader
+          backHref="/dashboard/casero"
+          backLabel="← Resumen"
+          title="Contratos e invitaciones"
+        />
 
-        <div className="grid gap-8 lg:grid-cols-2">
-          <Card>
+        <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
+          <Card className="min-w-0">
             <h2 className="mb-6 text-sm font-semibold text-ink">Nueva invitación</h2>
             <InvitationForm rooms={ownedRooms as Parameters<typeof InvitationForm>[0]["rooms"]} />
           </Card>
 
-          <Card padding="none">
-            <div className="border-b border-border px-5 py-4">
+          <Card padding="none" className="min-w-0">
+            <div className="border-b border-border px-4 py-4 sm:px-5">
               <h2 className="text-sm font-semibold text-ink">Invitaciones recientes</h2>
             </div>
-            <div className="divide-y divide-border">
-              {(invitations ?? []).length === 0 ? (
-                <p className="px-5 py-8 text-sm text-ink-muted text-center">Sin invitaciones</p>
-              ) : (
-                invitations?.map((inv) => (
-                  <div key={inv.id} className="px-5 py-3">
+            {(invitations ?? []).length === 0 ? (
+              <p className="px-4 py-8 text-center text-sm text-ink-muted sm:px-5">Sin invitaciones</p>
+            ) : (
+              <div className="space-y-3 p-4 sm:space-y-0 sm:divide-y sm:divide-border sm:p-0">
+                {invitations?.map((inv) => (
+                  <div
+                    key={inv.id}
+                    className="rounded-sm border border-border p-4 sm:border-0 sm:px-5 sm:py-3"
+                  >
                     <p className="text-sm text-ink">{inv.email}</p>
                     <p className="text-xs text-ink-muted">
                       {relName(inv.rooms)} ·{" "}
@@ -79,34 +83,40 @@ export default async function ContratosCaseroPage() {
                     {!inv.used_at && (
                       <Link
                         href={`/invitation/${inv.token}`}
-                        className="text-xs text-rust hover:underline"
+                        className="mt-2 inline-block text-xs text-rust hover:underline"
                       >
                         Abrir enlace
                       </Link>
                     )}
                   </div>
-                ))
-              )}
-            </div>
+                ))}
+              </div>
+            )}
           </Card>
         </div>
 
-        <Card padding="none">
-          <div className="border-b border-border px-5 py-4">
+        <Card padding="none" className="min-w-0">
+          <div className="border-b border-border px-4 py-4 sm:px-5">
             <h2 className="text-sm font-semibold text-ink">Todos los contratos</h2>
           </div>
-          <div className="divide-y divide-border">
-            {(contracts ?? []).length === 0 ? (
-              <p className="px-5 py-8 text-sm text-ink-muted text-center">Sin contratos</p>
-            ) : (
-              contracts?.map((c) => (
-                <div key={c.id} className="flex items-center justify-between px-5 py-3">
+          {(contracts ?? []).length === 0 ? (
+            <p className="px-4 py-8 text-center text-sm text-ink-muted sm:px-5">Sin contratos</p>
+          ) : (
+            <div className="space-y-3 p-4 sm:space-y-0 sm:divide-y sm:divide-border sm:p-0">
+              {contracts?.map((c) => (
+                <ListRow
+                  key={c.id}
+                  asCard
+                  className="sm:rounded-none sm:border-0 sm:shadow-none"
+                  actions={
+                    <Badge variant={c.status === "firmado" ? "forest" : "rust"}>{c.status}</Badge>
+                  }
+                >
                   <p className="text-sm text-ink">{contractLabel(c.rooms)}</p>
-                  <Badge variant={c.status === "firmado" ? "forest" : "rust"}>{c.status}</Badge>
-                </div>
-              ))
-            )}
-          </div>
+                </ListRow>
+              ))}
+            </div>
+          )}
         </Card>
       </div>
     </DashboardShell>

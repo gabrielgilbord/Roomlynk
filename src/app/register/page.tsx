@@ -6,7 +6,7 @@ import { Suspense } from "react";
 
 export default function RegisterPage() {
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen overflow-x-hidden">
       <aside className="hidden w-[45%] flex-col justify-between border-r border-border bg-paper p-12 lg:flex">
         <Logo />
         <div className="space-y-8">
@@ -28,7 +28,7 @@ export default function RegisterPage() {
         <p className="text-xs text-ink-muted">Sin tarjeta · Empieza en 2 minutos</p>
       </aside>
 
-      <main className="flex flex-1 flex-col items-center justify-center px-6 py-12">
+      <main className="flex flex-1 flex-col items-center justify-center px-4 py-8 sm:px-6 sm:py-12">
         <div className="mb-8 lg:hidden">
           <Logo />
         </div>

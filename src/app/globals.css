@@ -24,8 +24,8 @@
   --color-forest-light: var(--forest-light);
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
-  --font-display: var(--font-fraunces);
-  --font-sans: var(--font-ibm-plex);
+  --font-display: var(--font-outfit);
+  --font-sans: var(--font-plus-jakarta);
 }
 
 * {
@@ -34,13 +34,16 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
   background: var(--linen);
   color: var(--ink);
-  font-family: var(--font-ibm-plex), system-ui, sans-serif;
+  font-family: var(--font-plus-jakarta), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  min-width: 0;
 }
 
 /* Textura sutil — nada de glows */
@@ -49,15 +52,16 @@ body {
 }
 
 .rl-display {
-  font-family: var(--font-fraunces), Georgia, serif;
-  font-optical-sizing: auto;
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  letter-spacing: -0.02em;
 }
 
 /* Contratos: tipografía legal legible */
 .prose-contract h1 {
-  font-family: var(--font-fraunces), Georgia, serif;
+  font-family: var(--font-outfit), system-ui, sans-serif;
   font-size: 1.25rem;
   font-weight: 600;
+  letter-spacing: -0.02em;
   margin-bottom: 1rem;
   color: var(--ink);
 }

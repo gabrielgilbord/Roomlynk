@@ -93,7 +93,7 @@ export function InvitationFlow({ data, profileEmail }: InvitationFlowProps) {
 
   return (
     <div className="min-h-screen bg-linen">
-      <div className="mx-auto max-w-2xl px-4 py-12">
+      <div className="mx-auto w-full max-w-2xl px-4 py-8 pb-12 sm:py-12">
         <div className="mb-10 text-center">
           <Logo className="justify-center" />
           <h1 className="rl-display mt-8 text-2xl font-medium text-ink">
@@ -120,7 +120,7 @@ export function InvitationFlow({ data, profileEmail }: InvitationFlowProps) {
           </p>
         )}
 
-        <Card padding="lg">
+        <Card padding="lg" className="min-w-0 overflow-hidden">
           {step === "datos" && <TenantDataForm onSubmit={handleTenantSubmit} />}
 
           {step === "revision" && renderedHtml && (
@@ -133,7 +133,7 @@ export function InvitationFlow({ data, profileEmail }: InvitationFlowProps) {
                 </p>
               </div>
               <ContractPreview renderedHtml={renderedHtml} />
-              <div className="flex gap-3">
+              <div className="flex flex-col gap-3 sm:flex-row">
                 <Button variant="outline" onClick={() => setStep("datos")} className="flex-1">
                   Editar datos
                 </Button>

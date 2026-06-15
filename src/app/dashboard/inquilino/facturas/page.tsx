@@ -3,10 +3,11 @@ import { DashboardShell } from "@/components/layout/dashboard-shell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { ListRow } from "@/components/ui/list-row";
+import { PageHeader } from "@/components/ui/page-header";
 import { requireRole } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { formatCurrency, formatDate } from "@/lib/utils";
-import Link from "next/link";
 
 export default async function FacturasInquilinoPage() {
   const profile = await requireRole(["inquilino", "superadmin"]);
@@ -29,50 +30,54 @@ export default async function FacturasInquilinoPage() {
   return (
     <DashboardShell profile={profile} activePath="/dashboard/inquilino/facturas">
       <div className="space-y-8">
-        <header>
-          <Link href="/dashboard/inquilino" className="text-xs text-ink-muted hover:text-ink">
-            ← Inicio
-          </Link>
-          <h1 className="rl-display mt-2 text-3xl font-medium text-ink">Mis facturas</h1>
-        </header>
+        <PageHeader
+          backHref="/dashboard/inquilino"
+          backLabel="← Inicio"
+          title="Mis facturas"
+        />
 
-        <Card padding="none">
-          <div className="divide-y divide-border">
-            {(expenses ?? []).length === 0 ? (
-              <p className="px-5 py-12 text-center text-sm text-ink-muted">Sin facturas asignadas</p>
-            ) : (
-              expenses?.map((exp) => (
-                <div key={exp.id} className="flex items-center justify-between px-5 py-4">
-                  <div>
-                    <p className="text-sm font-medium text-ink capitalize">{exp.type}</p>
-                    <p className="text-xs text-ink-muted">{exp.description}</p>
-                    <p className="text-xs text-ink-muted">Vence {formatDate(exp.due_date)}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-medium">
-                      {formatCurrency(Number(exp.amount_per_room ?? exp.total_amount))}
-                    </p>
-                    {exp.status === "pendiente" ? (
-                      <form
-                        action={async () => {
-                          "use server";
-                          await markExpensePaidAction(exp.id);
-                        }}
-                        className="mt-2"
-                      >
-                        <Button type="submit" size="sm" variant="outline">
-                          Marcar pagado
-                        </Button>
-                      </form>
-                    ) : (
-                      <Badge variant="forest" className="mt-2">pagado</Badge>
-                    )}
-                  </div>
-                </div>
-              ))
-            )}
+        {(expenses ?? []).length === 0 ? (
+          <Card>
+            <p className="py-12 text-center text-sm text-ink-muted">Sin facturas asignadas</p>
+          </Card>
+        ) : (
+          <div className="space-y-3">
+            {expenses?.map((exp) => (
+              <Card key={exp.id} padding="sm" className="min-w-0">
+                <ListRow
+                  actions={
+                    <div className="w-full sm:w-auto sm:text-right">
+                      <p className="font-medium">
+                        {formatCurrency(Number(exp.amount_per_room ?? exp.total_amount))}
+                      </p>
+                      {exp.status === "pendiente" ? (
+                        <form
+                          action={async () => {
+                            "use server";
+                            await markExpensePaidAction(exp.id);
+                          }}
+                          className="mt-2"
+                        >
+                          <Button type="submit" size="sm" variant="outline" className="w-full sm:w-auto">
+                            Marcar pagado
+                          </Button>
+                        </form>
+                      ) : (
+                        <Badge variant="forest" className="mt-2">
+                          pagado
+                        </Badge>
+                      )}
+                    </div>
+                  }
+                >
+                  <p className="text-sm font-medium capitalize text-ink">{exp.type}</p>
+                  <p className="text-xs text-ink-muted">{exp.description}</p>
+                  <p className="text-xs text-ink-muted">Vence {formatDate(exp.due_date)}</p>
+                </ListRow>
+              </Card>
+            ))}
           </div>
-        </Card>
+        )}
       </div>
     </DashboardShell>
   );

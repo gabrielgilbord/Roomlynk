@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { Fraunces, IBM_Plex_Sans } from "next/font/google";
+import { Outfit, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
+  weight: ["500", "600", "700"],
 });
 
-const ibmPlex = IBM_Plex_Sans({
-  variable: "--font-ibm-plex",
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -27,9 +28,9 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${fraunces.variable} ${ibmPlex.variable} h-full`}
+      className={`${outfit.variable} ${plusJakarta.variable} h-full`}
     >
-      <body className="min-h-full rl-grain">{children}</body>
+      <body className="min-h-full font-sans rl-grain">{children}</body>
     </html>
   );
 }

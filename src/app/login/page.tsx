@@ -6,7 +6,7 @@ import { Suspense } from "react";
 
 export default function LoginPage() {
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen overflow-x-hidden">
       {/* Panel izquierdo — identidad */}
       <aside className="hidden w-[45%] flex-col justify-between border-r border-border bg-forest p-12 text-paper lg:flex">
         <Logo className="[&_span]:text-paper [&_span:last-child]:text-[#e8c4b8]" />
@@ -25,7 +25,7 @@ export default function LoginPage() {
       </aside>
 
       {/* Formulario */}
-      <main className="flex flex-1 flex-col items-center justify-center px-6 py-12">
+      <main className="flex flex-1 flex-col items-center justify-center px-4 py-8 sm:px-6 sm:py-12">
         <div className="mb-8 lg:hidden">
           <Logo />
         </div>

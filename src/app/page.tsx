@@ -4,24 +4,26 @@ import Link from "next/link";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-linen">
+    <div className="min-h-screen overflow-x-hidden bg-linen">
       {/* Nav */}
-      <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
+      <header className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-6">
         <Logo size="lg" />
-        <div className="flex items-center gap-3">
-          <Link href="/login">
-            <Button variant="ghost" size="sm">
+        <div className="flex w-full items-center gap-2 sm:w-auto sm:gap-3">
+          <Link href="/login" className="flex-1 sm:flex-none">
+            <Button variant="ghost" size="sm" className="w-full sm:w-auto">
               Entrar
             </Button>
           </Link>
-          <Link href="/register">
-            <Button size="sm">Empezar gratis</Button>
+          <Link href="/register" className="flex-1 sm:flex-none">
+            <Button size="sm" className="w-full sm:w-auto">
+              Empezar gratis
+            </Button>
           </Link>
         </div>
       </header>
 
       {/* Hero editorial */}
-      <section className="mx-auto max-w-6xl px-6 pb-24 pt-16">
+      <section className="mx-auto max-w-6xl px-4 pb-16 pt-8 sm:px-6 sm:pb-24 sm:pt-16">
         <div className="grid gap-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
           <div>
             <p className="mb-6 text-sm font-medium uppercase tracking-widest text-rust">
@@ -88,11 +90,11 @@ export default function HomePage() {
 
       {/* Tres roles — layout asimétrico */}
       <section className="border-t border-border bg-paper">
-        <div className="mx-auto max-w-6xl px-6 py-20">
+        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
           <h2 className="rl-display mb-12 text-3xl font-medium text-ink">
             Tres paneles, un solo sistema
           </h2>
-          <div className="grid gap-px border border-border bg-border md:grid-cols-3">
+          <div className="grid gap-px border border-border bg-border grid-cols-1 md:grid-cols-3">
             {[
               {
                 title: "Casero",
@@ -126,7 +128,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <footer className="border-t border-border px-6 py-8 text-center text-xs text-ink-muted">
+      <footer className="border-t border-border px-4 py-8 text-center text-xs text-ink-muted sm:px-6">
         RoomLynk · Hecho para caseros que valoran su tiempo
       </footer>
     </div>

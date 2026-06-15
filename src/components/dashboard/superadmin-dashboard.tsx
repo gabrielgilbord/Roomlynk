@@ -1,5 +1,9 @@
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { ListRow } from "@/components/ui/list-row";
+import { PageHeader } from "@/components/ui/page-header";
+import { StatGrid } from "@/components/ui/stat-grid";
 import { formatDate } from "@/lib/utils";
 import type { ContractStatus } from "@/types/database";
 
@@ -45,66 +49,50 @@ export function SuperadminDashboard({
   recentContracts,
 }: SuperadminDashboardProps) {
   return (
-    <div className="space-y-10">
-      <header>
-        <p className="text-sm text-ink-muted">Panel de administración</p>
-        <h1 className="rl-display mt-1 text-3xl font-medium text-ink">
-          RoomLynk SaaS
-        </h1>
-      </header>
+    <div className="space-y-8 sm:space-y-10">
+      <PageHeader subtitle="Panel de administración" title="RoomLynk SaaS" />
 
-      <div className="grid grid-cols-3 gap-px border border-border bg-border">
-        {[
+      <StatGrid
+        columns={3}
+        stats={[
           { label: "Caseros registrados", value: caserosCount },
           { label: "Contratos firmados", value: contractsCount },
           { label: "Inmuebles gestionados", value: propertiesCount },
-        ].map((stat) => (
-          <div key={stat.label} className="bg-paper px-6 py-5">
-            <p className="text-[11px] font-medium uppercase tracking-wide text-ink-muted">
-              {stat.label}
-            </p>
-            <p className="rl-display mt-2 text-4xl font-medium text-ink">
-              {stat.value}
-            </p>
-          </div>
-        ))}
-      </div>
+        ]}
+      />
 
-      <Card padding="none">
-        <div className="border-b border-border px-5 py-4">
+      <Card padding="none" className="min-w-0">
+        <div className="border-b border-border px-4 py-4 sm:px-5">
           <h2 className="text-sm font-semibold text-ink">Contratos recientes</h2>
         </div>
-        <div className="divide-y divide-border">
-          {recentContracts.length === 0 ? (
-            <p className="px-5 py-10 text-center text-sm text-ink-muted">
-              Aún no hay contratos en el sistema
-            </p>
-          ) : (
-            recentContracts.map((c) => {
+        {recentContracts.length === 0 ? (
+          <p className="px-4 py-10 text-center text-sm text-ink-muted sm:px-5">
+            Aún no hay contratos en el sistema
+          </p>
+        ) : (
+          <div className="space-y-3 p-4 sm:space-y-0 sm:divide-y sm:divide-border sm:p-0">
+            {recentContracts.map((c) => {
               const badge = statusBadge[c.status];
               const propertyName = getPropertyName(c.rooms);
               const roomName = getRoomName(c.rooms);
 
               return (
-                <div
+                <ListRow
                   key={c.id}
-                  className="flex items-center justify-between px-5 py-3"
+                  asCard
+                  className="md:rounded-none md:border-0 md:shadow-none"
+                  actions={<Badge variant={badge.variant}>{badge.label}</Badge>}
                 >
-                  <div>
-                    <p className="text-sm text-ink">
-                      {propertyName}
-                      {roomName && ` · ${roomName}`}
-                    </p>
-                    <p className="text-xs text-ink-muted">
-                      {formatDate(c.created_at)}
-                    </p>
-                  </div>
-                  <Badge variant={badge.variant}>{badge.label}</Badge>
-                </div>
+                  <p className="text-sm text-ink">
+                    {propertyName}
+                    {roomName && ` · ${roomName}`}
+                  </p>
+                  <p className="mt-0.5 text-xs text-ink-muted">{formatDate(c.created_at)}</p>
+                </ListRow>
               );
-            })
-          )}
-        </div>
+            })}
+          </div>
+        )}
       </Card>
     </div>
   );

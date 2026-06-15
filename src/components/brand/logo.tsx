@@ -17,7 +17,7 @@ export function Logo({ className, size = "md" }: LogoProps) {
     <Link href="/" className={cn("group inline-flex items-baseline gap-0.5", className)}>
       <span
         className={cn(
-          "rl-display font-semibold tracking-tight text-ink",
+          "rl-display font-bold tracking-tight text-ink",
           sizes[size]
         )}
       >
@@ -25,7 +25,7 @@ export function Logo({ className, size = "md" }: LogoProps) {
       </span>
       <span
         className={cn(
-          "rl-display font-semibold italic tracking-tight text-rust",
+          "rl-display font-bold tracking-tight text-rust",
           sizes[size]
         )}
       >

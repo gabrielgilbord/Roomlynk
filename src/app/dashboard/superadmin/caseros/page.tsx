@@ -1,9 +1,10 @@
 import { DashboardShell } from "@/components/layout/dashboard-shell";
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { ListRow } from "@/components/ui/list-row";
+import { PageHeader } from "@/components/ui/page-header";
 import { requireRole } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
-import Link from "next/link";
 
 export default async function CaserosSuperadminPage() {
   const profile = await requireRole(["superadmin"]);
@@ -18,21 +19,28 @@ export default async function CaserosSuperadminPage() {
   return (
     <DashboardShell profile={profile} activePath="/dashboard/superadmin/caseros">
       <div className="space-y-8">
-        <Link href="/dashboard/superadmin" className="text-xs text-ink-muted hover:text-ink">← Resumen</Link>
-        <h1 className="rl-display text-3xl font-medium text-ink">Caseros</h1>
-        <Card padding="none">
-          <div className="divide-y divide-border">
-            {(caseros ?? []).map((c) => (
-              <div key={c.id} className="flex justify-between px-5 py-3">
-                <div>
+        <PageHeader
+          backHref="/dashboard/superadmin"
+          backLabel="← Resumen"
+          title="Caseros"
+        />
+
+        {(caseros ?? []).length === 0 ? (
+          <Card>
+            <p className="py-8 text-center text-sm text-ink-muted">Sin caseros registrados</p>
+          </Card>
+        ) : (
+          <div className="space-y-3">
+            {caseros?.map((c) => (
+              <Card key={c.id} padding="sm" className="min-w-0">
+                <ListRow actions={<Badge variant="forest">activo</Badge>}>
                   <p className="text-sm font-medium text-ink">{c.full_name}</p>
-                  <p className="text-xs text-ink-muted">{c.email}</p>
-                </div>
-                <Badge variant="forest">activo</Badge>
-              </div>
+                  <p className="truncate text-xs text-ink-muted">{c.email}</p>
+                </ListRow>
+              </Card>
             ))}
           </div>
-        </Card>
+        )}
       </div>
     </DashboardShell>
   );

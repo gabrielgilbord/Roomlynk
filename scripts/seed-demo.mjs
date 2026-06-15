@@ -66,7 +66,39 @@ const USERS = [
   },
 ];
 
+const hasServiceRole = Boolean(env.SUPABASE_SERVICE_ROLE_KEY);
+
 async function ensureUser(user) {
+  if (hasServiceRole) {
+    const { data: list } = await supabase.auth.admin.listUsers();
+    const existing = list?.users?.find((u) => u.email === user.email);
+
+    if (existing) {
+      const { data, error } = await supabase.auth.admin.updateUserById(existing.id, {
+        password: PASSWORD,
+        email_confirm: true,
+        user_metadata: { full_name: user.full_name, role: user.role },
+      });
+      if (error) {
+        console.warn(`⚠️  ${user.email}: ${error.message}`);
+        return null;
+      }
+      return data.user;
+    }
+
+    const { data, error } = await supabase.auth.admin.createUser({
+      email: user.email,
+      password: PASSWORD,
+      email_confirm: true,
+      user_metadata: { full_name: user.full_name, role: user.role },
+    });
+    if (error) {
+      console.warn(`⚠️  ${user.email}: ${error.message}`);
+      return null;
+    }
+    return data.user;
+  }
+
   const { data: signUp, error: signUpError } = await supabase.auth.signUp({
     email: user.email,
     password: PASSWORD,
@@ -79,7 +111,7 @@ async function ensureUser(user) {
       password: PASSWORD,
     });
     if (signInError) {
-      console.warn(`⚠️  ${user.email}: ${signUpError.message}`);
+      console.warn(`⚠️  ${user.email}: ${signInError.message}`);
       return null;
     }
     return signIn.user;
@@ -96,6 +128,14 @@ async function ensureUser(user) {
 
 async function main() {
   console.log("🌱 RoomLynk — Seed demo\n");
+
+  if (!hasServiceRole) {
+    console.log(
+      "ℹ️  Sin SUPABASE_SERVICE_ROLE_KEY: los usuarios pueden quedar sin confirmar.\n" +
+        "   Opción A: añade la service role en .env.local y vuelve a ejecutar npm run seed\n" +
+        "   Opción B: ejecuta scripts/setup-005-demo-users.sql en Supabase SQL Editor\n"
+    );
+  }
 
   const { error: schemaCheck } = await supabase.from("profiles").select("id").limit(1);
   if (schemaCheck?.message?.includes("schema") || schemaCheck?.code === "PGRST106") {

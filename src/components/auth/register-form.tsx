@@ -29,7 +29,7 @@ export function RegisterForm({ defaultNext = "" }: { defaultNext?: string }) {
       <input type="hidden" name="role" value={role} />
       {defaultNext && <input type="hidden" name="next" value={defaultNext} />}
 
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
         {(
           [
             { id: "casero" as const, label: "Soy casero", desc: "Gestiono inmuebles" },

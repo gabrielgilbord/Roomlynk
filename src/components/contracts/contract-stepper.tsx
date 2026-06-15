@@ -19,17 +19,17 @@ export function ContractStepper({ currentStep }: ContractStepperProps) {
   const currentIndex = steps.findIndex((s) => s.id === currentStep);
 
   return (
-    <ol className="flex items-center gap-0">
+    <ol className="grid grid-cols-4 gap-2 sm:flex sm:items-center sm:gap-0">
       {steps.map((step, index) => {
         const done = index < currentIndex;
         const active = index === currentIndex;
 
         return (
-          <li key={step.id} className="flex flex-1 items-center">
-            <div className="flex flex-col items-center gap-1.5">
+          <li key={step.id} className="flex min-w-0 flex-col items-center sm:flex-1 sm:flex-row">
+            <div className="flex w-full min-w-0 flex-col items-center gap-1 sm:gap-1.5">
               <div
                 className={cn(
-                  "flex h-8 w-8 items-center justify-center rounded-sm border text-xs font-semibold transition-colors",
+                  "flex h-8 w-8 shrink-0 items-center justify-center rounded-sm border text-xs font-semibold transition-colors",
                   done && "border-forest bg-forest text-paper",
                   active && "border-rust bg-rust text-paper",
                   !done && !active && "border-border bg-paper text-ink-muted"
@@ -39,7 +39,7 @@ export function ContractStepper({ currentStep }: ContractStepperProps) {
               </div>
               <span
                 className={cn(
-                  "text-[11px] font-medium",
+                  "w-full truncate text-center text-[10px] font-medium sm:text-[11px]",
                   active ? "text-rust" : "text-ink-muted"
                 )}
               >
@@ -49,7 +49,7 @@ export function ContractStepper({ currentStep }: ContractStepperProps) {
             {index < steps.length - 1 && (
               <div
                 className={cn(
-                  "mx-2 mb-5 h-px flex-1",
+                  "hidden h-px flex-1 sm:mx-2 sm:mb-5 sm:block",
                   index < currentIndex ? "bg-forest" : "bg-border"
                 )}
               />
